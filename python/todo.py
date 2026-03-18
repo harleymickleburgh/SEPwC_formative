@@ -11,6 +11,11 @@ def add_task(task):
     """
 
 def list_tasks():
+    """Function: List_task
+    
+    Input - nothing 
+    Return - a list of the tasks
+    """
     return
 
 
