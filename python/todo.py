@@ -1,18 +1,19 @@
 import argparse
 import os
 
-TASK_FILE = ".tasks.txt"
+TASK_FILE = "list.txt"
 
-def add_task(task, filename= ".tasks.txt"):
+def add_task(task):
     """Function: add_task
     
     Input - a task to add to the list
     Return - nothing
     """ 
-    with open(filename, "a") as file:
+    with open(TASK_FILE, "a") as file:
         file.write(task + "\n")
     print(f"{task} has been added to your list")
     
+
 
 def list_tasks():
     """Function: List_task
@@ -20,7 +21,9 @@ def list_tasks():
     Input - nothing 
     Return - a list of the tasks
     """
-    return
+    with open(TASK_FILE, "r") as file:
+        a = file.readlines()
+    print(type(a),a)
 
 
 def remove_task(index):
