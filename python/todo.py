@@ -1,7 +1,9 @@
-import argparse
 import os
+import argparse
 
-TASK_FILE = "list.txt"
+
+TASK_FILE = ("list.txt")
+
 
 def add_task(task):
     """Function: add_task
@@ -21,9 +23,20 @@ def list_tasks():
     Input - nothing 
     Return - a list of the tasks
     """
+    # 1. Check if the file exists first
+    if not os.path.exists(TASK_FILE):
+        print("--- Your todo list is currently empty! ---")
+        return []
+
+    # 2. If it DOES exist, then open and read it
     with open(TASK_FILE, "r") as file:
-        a = file.readlines()
-    print(type(a),a)
+        tasks = file.readlines()
+    
+    # 3. Print them
+    for i, task in enumerate(tasks, 1):
+        print(f"{i}. {task.strip()}")
+        
+    return tasks
 
 
 def remove_task(index):
