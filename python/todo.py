@@ -3,12 +3,16 @@ import os
 
 TASK_FILE = ".tasks.txt"
 
-def add_task(task):
+def add_task(task, filename= ".tasks.txt"):
     """Function: add_task
     
     Input - a task to add to the list
     Return - nothing
-    """
+    """ 
+    with open(filename, "a") as file:
+        file.write(task + "\n")
+    print(f"{task} has been added to your list")
+    
 
 def list_tasks():
     """Function: List_task
