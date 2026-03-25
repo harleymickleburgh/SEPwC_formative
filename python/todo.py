@@ -1,21 +1,17 @@
 import os
 import argparse
 
-
-TASK_FILE = ("list.txt")
-
+TASK_FILE = "list.txt"
 
 def add_task(task):
     """Function: add_task
-    
+
     Input - a task to add to the list
     Return - nothing
-    """ 
+    """
     with open(TASK_FILE, "a") as file:
         file.write(task + "\n")
     print(f"{task} has been added to your list")
-    
-
 
 def list_tasks():
     """Function: List_task
@@ -23,24 +19,29 @@ def list_tasks():
     Input - nothing 
     Return - a list of the tasks
     """
-    # 1. Check if the file exists first
+    #check if the file exists first
     if not os.path.exists(TASK_FILE):
-        print("--- Your todo list is currently empty! ---")
+        print("---Your todo list i currently empty---")
         return []
 
-    # 2. If it DOES exist, then open and read it
     with open(TASK_FILE, "r") as file:
         tasks = file.readlines()
-    
-    # 3. Print them
+
+    print("\n-----Your Tasks-----")
     for i, task in enumerate(tasks, 1):
         print(f"{i}. {task.strip()}")
-        
-    return tasks
 
+    return "\n"
 
 def remove_task(index):
-    return
+    """Functions: add_task
+    
+    Input - a task to be removed from the list
+    Return - nothing
+    """
+    with open(TASK_FILE, "a") as file:
+        
+        return
 
 def main():
     parser = argparse.ArgumentParser(description="Command-line Todo List")
