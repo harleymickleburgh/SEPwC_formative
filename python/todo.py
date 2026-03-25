@@ -34,14 +34,15 @@ def list_tasks():
     return "\n"
 
 def remove_task(index):
-    """Functions: add_task
+    """Functions: remove_task
     
     Input - a task to be removed from the list
     Return - nothing
     """
-    with open(TASK_FILE, "a") as file:
-        
-        return
+   # with open(TASK_FILE, "a") as file:
+     #   file.write(task)
+      #  print(f"{task} has been removed from your list")
+      #  return
 
 def main():
     parser = argparse.ArgumentParser(description="Command-line Todo List")
