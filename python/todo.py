@@ -21,17 +21,15 @@ def list_tasks():
     """
     #check if the file exists first
     if not os.path.exists(TASK_FILE):
-        print("---Your todo list i currently empty---")
+        print("---Your todo list is currently empty---")
         return []
 
     with open(TASK_FILE, "r") as file:
         tasks = file.readlines()
 
     print("\n-----Your Tasks-----")
-    for i, task in enumerate(tasks, 1):
-        print(f"{i}. {task.strip()}")
 
-    return "\n"
+    return "\n".join([f"{i}. {task.strip()}" for i, task in enumerate(tasks,1)])
 
 def remove_task(index):
     """Functions: remove_task
