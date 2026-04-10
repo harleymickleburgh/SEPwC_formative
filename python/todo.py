@@ -1,7 +1,8 @@
+"""scipt to write and edit a list of tasks"""
 import os
 import argparse
 
-TASK_FILE = "list.txt"
+TASK_FILE = ".tasks.txt" if os.path.exists(".tasks.txt") else "list.txt"
 
 def add_task(task):
     """Function: add_task
@@ -9,7 +10,7 @@ def add_task(task):
     Input - a task to add to the list
     Return - nothing
     """
-    with open(TASK_FILE, "a") as file:
+    with open(TASK_FILE, "a", encoding="utf-8") as file:
         file.write(task + "\n")
     print(f"{task} has been added to your list")
 
@@ -20,14 +21,11 @@ def list_tasks():
     Return - a list of the tasks
     """
     #check if the file exists first
-    if not os.path.exists(TASK_FILE):
-        print("---Your todo list is currently empty---")
-        return []
+    if not os.path.exists(TASK_FILE) or os.path.getsize(TASK_FILE) == 0:
+        return ""
 
-    with open(TASK_FILE, "r") as file:
-        tasks = file.readlines()
-
-    print("\n-----Your Tasks-----")
+    with open(TASK_FILE, "r", encoding="utf-8") as file:
+        tasks = [line.strip() for line in file.readlines() if line.strip()]
 
     return "\n".join([f"{i}. {task.strip()}" for i, task in enumerate(tasks,1)])
 
@@ -37,12 +35,21 @@ def remove_task(index):
     Input - a task to be removed from the list
     Return - nothing
     """
-   # with open(TASK_FILE, "a") as file:
-     #   file.write(task)
-      #  print(f"{task} has been removed from your list")
-      #  return
+    #read the current list of tasks
+    with open(TASK_FILE, "r", encoding="utf-8") as file:
+        tasks = file.readlines()
+        #check the specific task
+    if 0< index <= len(tasks):
+        tasks.pop(index - 1)
+        #remove the task
+        with open(TASK_FILE, "w", encoding="utf-8") as file:
+            file.writelines(tasks)
+        print(f"Task {index} removed successfully.")
+    else:
+        print(f"Error: Task {index} does not exist.")
 
 def main():
+    """main function to handle arguments."""
     parser = argparse.ArgumentParser(description="Command-line Todo List")
     parser.add_argument(
             "-a",
@@ -65,7 +72,11 @@ def main():
         add_task(args.add)
     elif args.list:
         tasks = list_tasks()
-        print(tasks)
+        if tasks:
+            output = f"\n-----Your Tasks-----\n{tasks}\n"
+            print(output.replace("\r", ""), end="")
+        else:
+            print("\n-----Your Tasks-----".replace("\r", ""),end="")
     elif args.remove:
         remove_task(int(args.remove))
     else:
