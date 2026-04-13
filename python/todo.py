@@ -1,6 +1,7 @@
 """scipt to write and edit a list of tasks"""
 import os
 import argparse
+import sys
 
 TASK_FILE = ".tasks.txt" if os.path.exists(".tasks.txt") else "list.txt"
 
@@ -12,7 +13,7 @@ def add_task(task):
     """
     with open(TASK_FILE, "a", encoding="utf-8") as file:
         file.write(task + "\n")
-    print(f"{task} has been added to your list")
+    #print(f"{task} has been added to your list")
 
 def list_tasks():
     """Function: List_task
@@ -50,6 +51,13 @@ def remove_task(index):
 
 def main():
     """main function to handle arguments."""
+    # Force Windows to stop adding \r characters automatically
+    if sys.platform == "win32":
+        try:
+            sys.stdout.reconfigure(newline='\n')
+        except AttributeError:
+            # Fallback for older Python versions
+            pass
     parser = argparse.ArgumentParser(description="Command-line Todo List")
     parser.add_argument(
             "-a",
@@ -73,10 +81,9 @@ def main():
     elif args.list:
         tasks = list_tasks()
         if tasks:
-            output = f"\n-----Your Tasks-----\n{tasks}\n"
-            print(output.replace("\r", ""), end="")
+            print(tasks.replace("\r", ""), end="\n")
         else:
-            print("\n-----Your Tasks-----".replace("\r", ""),end="")
+            print("", end="")
     elif args.remove:
         remove_task(int(args.remove))
     else:
